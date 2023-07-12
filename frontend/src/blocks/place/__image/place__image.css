@@ -1,0 +1,8 @@
+.place__image {
+    height: 282px;
+    width: 282px;
+    object-fit: cover;
+    cursor: pointer;
+    display: flex;
+    background-color: gainsboro;
+}

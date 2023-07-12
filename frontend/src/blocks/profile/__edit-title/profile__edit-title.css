@@ -1,0 +1,12 @@
+.profile__edit-title {
+    display: flex;
+    align-items: center;
+    gap: 19px;
+}
+
+@media screen and (max-width: 670px) {
+    .profile__edit-title {
+        gap: 11px;
+        margin-left: 27px;
+    }
+}

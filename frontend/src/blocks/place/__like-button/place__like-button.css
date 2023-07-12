@@ -1,0 +1,12 @@
+.place__like-button {
+    background: transparent url(../../../images/Vector-like.svg) no-repeat;
+    width: 23px;
+    height: 22px;
+    border: none;
+    transition: .3s;
+    cursor: pointer;
+}
+
+.place__like-button:hover {
+    opacity: .5;
+}

@@ -1,0 +1,8 @@
+
+.place__title-zone {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 21px 20px auto 21px;
+    color: #000000;
+}
