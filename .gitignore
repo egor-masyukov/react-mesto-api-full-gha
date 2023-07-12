@@ -7,7 +7,7 @@ yarn-error.log*
 
 # Dependency directory
 node_modules
-/.pnp
+.pnp
 .pnp.js
 
 # Optional npm cache directory
@@ -19,11 +19,11 @@ node_modules
 .vscode 
 
 # production
-/build
-/dist
+build
+dist
 
 # testing
-/coverage
+coverage
 
 # misc
 .env.local
