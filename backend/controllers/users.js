@@ -34,7 +34,7 @@ const login = (req, res, next) => {
               );
 
               res.cookie('jwt', jwt, {
-                maxAge: 360000,
+                maxAge: 604800000,
                 httpOnly: true,
                 sameSite: true,
               });

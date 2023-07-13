@@ -25,13 +25,12 @@ const register = (email, password) => {
   }).then(checkResponse);
 }
 
-const checkToken = (JWT) => {
+const checkToken = () => {
   return fetch(`${BASE_URL}/users/me`, {
     method: 'GET',
     credentials: 'include',
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${JWT}`
     },
   }).then(checkResponse);
 }
