@@ -5,7 +5,7 @@ const checkResponse = (res) => {
     return Promise.reject(console.log(`Произошла ошибка, ${res.status}`))};
 }
 
-const BASE_URL = 'http://api.egmas.nomoredomains.work';
+const BASE_URL = 'https://api.egmas.nomoredomains.work';
 
 const authorize = (email, password) => {
   return fetch(`${BASE_URL}/signin`, {
@@ -25,12 +25,13 @@ const register = (email, password) => {
   }).then(checkResponse);
 }
 
-const checkToken = () => {
+const checkToken = (jwt) => {
   return fetch(`${BASE_URL}/users/me`, {
     method: 'GET',
     credentials: 'include',
     headers: {
       "Content-Type": "application/json",
+      "Authorization": `Bearer ${jwt}`
     },
   }).then(checkResponse);
 }

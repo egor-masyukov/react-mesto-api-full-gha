@@ -1,9 +1,10 @@
+
 const express = require('express');
-const cors = require('cors');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
+const cors = require('cors');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const router = require('./routes');
 const errorHandler = require('./middlewares/errorHandler');
@@ -11,7 +12,7 @@ const errorHandler = require('./middlewares/errorHandler');
 const app = express();
 app.use(
   cors({
-    origin: 'http://egmas.nomoredomains.work',
+    origin: 'https://egmas.nomoredomains.work',
     credentials: true,
   }),
 );
@@ -36,7 +37,7 @@ app.use(errorLogger);
 app.use(errors());
 app.use(errorHandler);
 
-app.listen(3000, () => {
+app.listen(3001, () => {
   // eslint-disable-next-line no-console
-  console.log('Слушаю порт 3000');
+  console.log('Слушаю порт 3001');
 });

@@ -15,7 +15,6 @@ class Api {
   getInitialCards() {
     return fetch(`${this._url}/cards`, {
       method: 'GET',
-      credentials: 'include',
       headers: this._headers,
     }).then(this._checkResponse)
   }
@@ -24,7 +23,6 @@ class Api {
   addCard(name, link) {
     return fetch(`${this._url}/cards`, {
       method: 'POST',
-      credentials: 'include',
       headers: this._headers,
       body: JSON.stringify({ name, link }),
     }).then(this._checkResponse)
@@ -34,7 +32,6 @@ class Api {
   deleteCard(cardId) {
     return fetch(`${this._url}/cards/${cardId}`, {
       method: 'DELETE',
-      credentials: 'include',
       headers: this._headers,
     }).then(this._checkResponse)
   }
@@ -43,7 +40,6 @@ class Api {
   setLike(cardId) {
     return fetch(`${this._url}/cards/${cardId}/likes`, {
       method: 'PUT',
-      credentials: 'include',
       headers: this._headers
     }).then(this._checkResponse)
   }
@@ -52,7 +48,6 @@ class Api {
   deleteLike(cardId) {
     return fetch(`${this._url}/cards/${cardId}/likes`, {
       method: 'DELETE',
-      credentials: 'include',
       headers: this._headers
     }).then(this._checkResponse)
   }
@@ -61,7 +56,6 @@ class Api {
   getUserData() {
     return fetch(`${this._url}/users/me`, {
       method: 'GET',
-      credentials: 'include',
       headers: this._headers,
     }).then(this._checkResponse)
   }
@@ -71,7 +65,6 @@ class Api {
     return fetch(`${this._url}/users/me`, {
       headers: this._headers,
       method: 'PATCH',
-      credentials: 'include',
       body: JSON.stringify({name, about})
     }).then(this._checkResponse)
   }
@@ -80,7 +73,6 @@ class Api {
   editAvatar(avatarLink) {
     return fetch(`${this._url}/users/me/avatar`, {
       method: 'PATCH',
-      credentials: 'include',
       headers: this._headers,
       body: JSON.stringify({ avatar: avatarLink.avatar })
     }).then(this._checkResponse)
@@ -88,11 +80,11 @@ class Api {
 }
 
 const api = new Api({
-  url: 'http://api.egmas.nomoredomains.work',
+  url: 'https://api.egmas.nomoredomains.work',
   headers: {
+    authorization: `Bearer ${ localStorage.getItem('jwt') }`,
     'Content-Type': 'application/json',
-  },
-  credentials: 'include'
+  }
 })
-
 export default api
+
