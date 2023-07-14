@@ -1,5 +1,5 @@
 class Api {
-  constructor(config) {
+  constructor (config) {
     this._url = config.url;
     this._headers = config.headers;
   }
@@ -65,7 +65,7 @@ class Api {
     return fetch(`${this._url}/users/me`, {
       headers: this._headers,
       method: 'PATCH',
-      body: JSON.stringify({name, about})
+      body: JSON.stringify({ name, about })
     }).then(this._checkResponse)
   }
 
@@ -82,8 +82,8 @@ class Api {
 const api = new Api({
   url: 'https://api.egmas.nomoredomains.work',
   headers: {
-    authorization: `Bearer ${ localStorage.getItem('jwt') }`,
     'Content-Type': 'application/json',
+    authorization: `Bearer ${localStorage.getItem('token')}`,
   }
 })
 export default api

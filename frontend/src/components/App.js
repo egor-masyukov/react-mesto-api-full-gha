@@ -29,23 +29,22 @@ export default function App() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const jwt = localStorage.getItem('jwt');
+        const token = localStorage.getItem('token');
 
-        if (jwt) {
+        if (token) {
             Promise.all([api.getUserData(), api.getInitialCards()])
                 .then(([userData, cardData]) => {
                     setCurrentUser(userData);
                     setCards(cardData);
-                    //  navigate('/');
                 })
                 .catch(err => alert(`Произошла ошибка, ${err}`))
         }
     }, [loggedIn])
 
     useEffect(() => {
-        const jwt = localStorage.getItem('jwt');
-        if (jwt) {
-            checkToken(jwt)
+        const token = localStorage.getItem('token');
+        if (token) {
+            checkToken(token)
                 .then((res) => {
                     if (res) {
                         setLoggedIn(true);
@@ -53,7 +52,7 @@ export default function App() {
                         navigate('/');
                     }
                 })
-                .catch( (err) => { localStorage.removeItem('jwt'); alert(`Произошла ошибка, ${err}`) })
+                .catch( (err) => { localStorage.removeItem('token'); alert(`Произошла ошибка, ${err}`) })
         }
     }, []);
 
@@ -120,7 +119,7 @@ export default function App() {
     const handleLogin = (email, password) => {
         authorize(email, password)
             .then((res) => {
-                localStorage.setItem('jwt', res.token);
+                localStorage.setItem('token', res.token);
                 setLoggedIn(true);
                 setEmail(email);
                 navigate("/");
@@ -143,8 +142,8 @@ export default function App() {
     };
 
     const handleLogOut = () => {
+        localStorage.removeItem('token');
         setLoggedIn(false);
-        localStorage.removeItem('jwt');
         setEmail(null);
         navigate("/sign-in");
     };

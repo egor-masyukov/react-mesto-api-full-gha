@@ -1,4 +1,3 @@
-
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -37,7 +36,7 @@ app.use(errorLogger);
 app.use(errors());
 app.use(errorHandler);
 
-app.listen(3001, () => {
+app.listen(3000, () => {
   // eslint-disable-next-line no-console
-  console.log('Слушаю порт 3001');
+  console.log('Слушаю порт 3000');
 });

@@ -27,18 +27,12 @@ const login = (req, res, next) => {
         bcrypt.compare(String(password), user.password)
           .then((isValidUser) => {
             if (isValidUser) {
-              const jwt = jsonWebToken.sign(
+              const token = jsonWebToken.sign(
                 { _id: user._id },
                 NODE_ENV === 'production' ? JWT_SECRET : 'secret-key',
                 { expiresIn: '7d' },
               );
-
-              res.cookie('jwt', jwt, {
-                maxAge: 604800000,
-                httpOnly: true,
-                sameSite: true,
-              });
-              res.send({ data: user.toJSON() });
+              res.status(200).send({ token });
             } else {
               next(new UnauthorizedError('Неверные данные для входа'));
             }
@@ -83,7 +77,6 @@ const createUser = (req, res, next) => {
         .then((user) => res.status(201).send(user))
         .catch((err) => {
           if (err.message.includes('Validation failed')) {
-            console.log(err);
             next(new BadRequestError('Вы ввели некоректные данные'));
           } else if (err.code === 11000) {
             next(new ConflictError('Пользователь с таким email уже существует'));
