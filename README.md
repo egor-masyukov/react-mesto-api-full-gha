@@ -9,7 +9,7 @@
 
 ## Ссылки на проект
 
-IP-адрес 51.250.84.39
+IP 51.250.84.39
 
 Frontend https://egmas.nomoredomains.work
 
