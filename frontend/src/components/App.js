@@ -26,11 +26,12 @@ export default function App() {
     const [loggedIn, setLoggedIn] = useState(false);
     const [email, setEmail] = useState(null);
     const [infoTooltip, setInfoTooltip] = useState(false);
+    const [isOkay, setIsOkay] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
         const token = localStorage.getItem('token');
-
+        console.log(token);
         if (token) {
             Promise.all([api.getUserData(), api.getInitialCards()])
                 .then(([userData, cardData]) => {
@@ -48,7 +49,7 @@ export default function App() {
                 .then((res) => {
                     if (res) {
                         setLoggedIn(true);
-                        setEmail(res.data.email);
+                        setEmail(res.email);
                         navigate('/');
                     }
                 })
@@ -57,16 +58,16 @@ export default function App() {
     }, []);
 
     const handleCardLike = (card) => {
-        const isLiked = card.likes.some(i => i._id === currentUser._id);
+        const isLiked = card.likes.some(i => i === currentUser._id);
         if (!isLiked) {
             api.setLike(card._id).then((newCard) => {
-                setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+                setCards((state) => state.map((c) => (c._id === card._id ? newCard : c)));
             }).catch(err => alert(`Произошла ошибка, ${err}`))
         }
 
         else {
             api.deleteLike(card._id).then((newCard) => {
-                setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+                setCards((state) => state.map((c) => (c._id === card._id ? newCard : c)));
             }).catch(err => alert(`Произошла ошибка, ${err}`))
         }
     }
@@ -101,7 +102,10 @@ export default function App() {
 
     const handleEditAvatarClick = () => { setIsEditAvatarPopupOpen(true); }
 
-    const openInfoTooltip = () => { setInfoTooltip(true); };
+    const openInfoTooltip = (status = true) => { 
+        setInfoTooltip(true);
+        setIsOkay(status); 
+    };
 
     const handleCardClick = (card) => {
         setIsImageOpen(true);
@@ -118,26 +122,25 @@ export default function App() {
 
     const handleLogin = (email, password) => {
         authorize(email, password)
-            .then((res) => {
-                localStorage.setItem('token', res.token);
-                setLoggedIn(true);
+            .then(() => {
+                const token = localStorage.getItem('token');
+                if (token) {setLoggedIn(true);
                 setEmail(email);
-                navigate("/");
+                navigate("/");}
+                
             }).catch(() => {
                 setLoggedIn(false);
-                openInfoTooltip()
+                openInfoTooltip(false);
             });
     };
 
     const handleRegister = (email, password) => {
         register(email, password)
             .then(() => {
-                setLoggedIn(true);
-                openInfoTooltip()
+                openInfoTooltip(true);
                 navigate("/sign-in");
             }).catch(() => {
-                setLoggedIn(false);
-                openInfoTooltip()
+                openInfoTooltip(false);
             })
     };
 
@@ -220,7 +223,7 @@ export default function App() {
                 card={selectedCard} />
 
             <InfoTooltip
-                popupStatus={loggedIn}
+                popupStatus={isOkay}
                 isOpen={infoTooltip}
                 onClose={closeAllPopups}
             />

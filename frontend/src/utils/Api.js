@@ -1,7 +1,6 @@
 class Api {
-  constructor (config) {
-    this._url = config.url;
-    this._headers = config.headers;
+  constructor (url) {
+    this._url = url;
   }
 
   _checkResponse(res) {
@@ -15,7 +14,10 @@ class Api {
   getInitialCards() {
     return fetch(`${this._url}/cards`, {
       method: 'GET',
-      headers: this._headers,
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
     }).then(this._checkResponse)
   }
 
@@ -23,8 +25,10 @@ class Api {
   addCard(name, link) {
     return fetch(`${this._url}/cards`, {
       method: 'POST',
-      headers: this._headers,
-      body: JSON.stringify({ name, link }),
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${localStorage.getItem('token')}`,
+      }, body: JSON.stringify({ name, link }),
     }).then(this._checkResponse)
   }
 
@@ -32,7 +36,10 @@ class Api {
   deleteCard(cardId) {
     return fetch(`${this._url}/cards/${cardId}`, {
       method: 'DELETE',
-      headers: this._headers,
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
     }).then(this._checkResponse)
   }
 
@@ -40,7 +47,10 @@ class Api {
   setLike(cardId) {
     return fetch(`${this._url}/cards/${cardId}/likes`, {
       method: 'PUT',
-      headers: this._headers
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
     }).then(this._checkResponse)
   }
 
@@ -48,7 +58,10 @@ class Api {
   deleteLike(cardId) {
     return fetch(`${this._url}/cards/${cardId}/likes`, {
       method: 'DELETE',
-      headers: this._headers
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
     }).then(this._checkResponse)
   }
 
@@ -56,15 +69,20 @@ class Api {
   getUserData() {
     return fetch(`${this._url}/users/me`, {
       method: 'GET',
-      headers: this._headers,
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
     }).then(this._checkResponse)
   }
 
   //отправка данных пользователя
   editUserData(name, about) {
     return fetch(`${this._url}/users/me`, {
-      headers: this._headers,
-      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${localStorage.getItem('token')}`,
+      }, method: 'PATCH',
       body: JSON.stringify({ name, about })
     }).then(this._checkResponse)
   }
@@ -73,18 +91,16 @@ class Api {
   editAvatar(avatarLink) {
     return fetch(`${this._url}/users/me/avatar`, {
       method: 'PATCH',
-      headers: this._headers,
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
       body: JSON.stringify({ avatar: avatarLink.avatar })
     }).then(this._checkResponse)
   }
 }
 
-const api = new Api({
-  url: 'https://api.egmas.nomoredomains.work',
-  headers: {
-    'Content-Type': 'application/json',
-    authorization: `Bearer ${localStorage.getItem('token')}`,
-  }
-})
+const api = new Api( 'https://api.egmas.nomoredomains.work' );
+
 export default api
 

@@ -7,11 +7,10 @@ export default function Card(props) {
     const handleDeleteClick = () => { props.onCardDelete(props.card); }
     const handleLikeClick = () => { props.onCardLike(props.card); }
 
-    const isOwn = props.card.owner._id === currentUser._id;
-    const isLiked = props.card.likes.some(i => i._id === currentUser._id);
+    const isOwn = props.card.owner === currentUser._id;
+    const isLiked = props.card.likes.some(i => i === currentUser._id);
     const cardLikeButtonClassName = (
         `place__like-button ${isLiked && 'place__like-button_active'}`);
-
 
     return (
         <li className="place">

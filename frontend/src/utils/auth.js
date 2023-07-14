@@ -14,8 +14,8 @@ const authorize = (email, password) => {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password }),
   }).then(checkResponse)
-    .then((userData) => {
-      if (userData.token) { localStorage.setItem('token', userData.token)}
+    .then((userDatas) => {
+      if (userDatas.token) { localStorage.setItem('token', userDatas.token)}
     })
 }
 
@@ -32,7 +32,7 @@ const checkToken = (token) => {
     method: 'GET',
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     },
   }).then(checkResponse);
 }
